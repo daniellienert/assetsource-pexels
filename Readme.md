@@ -2,7 +2,7 @@
 
 
 # Pexels Asset Source
-This package provides a Neos Asset Source to access the Pexels image database.
+This package provides a Neos Asset Source to access the [Pexels](https://www.pexels.com) image database.
 
 ## How to use it
 1. Install the package via composer `composer require dl/assetsource-pexels`

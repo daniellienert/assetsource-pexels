@@ -2,6 +2,7 @@
     "description": "Pexels Asset Source - https://www.pexels.com/",
     "type": "neos-package",
     "name": "dl/assetsource-pexels",
+    "license": "MIT",
     "require": {
         "neos/neos": "^4.0",
         "guzzlehttp/guzzle": "^5.1"
