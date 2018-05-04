@@ -1,0 +1,9 @@
+DL\AssetSource\Pexels\Api\PexelsClient:
+  properties:
+    photoPropertyCache:
+      object:
+        factoryObjectName: Neos\Flow\Cache\CacheManager
+        factoryMethodName: getCache
+        arguments:
+          1:
+            value: DlAssetSourcePexels_PhotoPropertyCache

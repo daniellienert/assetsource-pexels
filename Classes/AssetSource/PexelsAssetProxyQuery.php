@@ -1,0 +1,122 @@
+<?php
+namespace DL\AssetSource\Pexels\AssetSource;
+
+/*
+ * This file is part of the DL.AssetSource.Pexels package.
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
+use Neos\Flow\Annotations as Flow;
+use Neos\Media\Domain\Model\AssetSource\AssetProxyQueryInterface;
+use Neos\Media\Domain\Model\AssetSource\AssetProxyQueryResultInterface;
+use Neos\Media\Domain\Model\AssetSource\AssetSourceConnectionExceptionInterface;
+
+final class PexelsAssetProxyQuery implements AssetProxyQueryInterface
+{
+
+    /**
+     * @var PexelsAssetSource
+     */
+    private $assetSource;
+
+    /**
+     * UnsplashAssetProxyQuery constructor.
+     * @param PexelsAssetSource $assetSource
+     */
+    public function __construct(PexelsAssetSource $assetSource)
+    {
+        $this->assetSource = $assetSource;
+    }
+
+    /**
+     * @var int
+     */
+    private $limit = 20;
+
+    /**
+     * @var int
+     */
+    private $offset = 0;
+
+    /**
+     * @var string
+     */
+    private $searchTerm = '';
+
+    /**
+     * @param int $offset
+     */
+    public function setOffset(int $offset): void
+    {
+        $this->offset = $offset;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOffset(): int
+    {
+        return $this->offset;
+    }
+
+    /**
+     * @param int $limit
+     */
+    public function setLimit(int $limit): void
+    {
+        $this->limit = $limit;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit(): int
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSearchTerm(): string
+    {
+        return $this->searchTerm;
+    }
+
+    /**
+     * @param string $searchTerm
+     */
+    public function setSearchTerm(string $searchTerm): void
+    {
+        $this->searchTerm = $searchTerm;
+    }
+
+    /**
+     * @return AssetProxyQueryResultInterface
+     * @throws AssetSourceConnectionExceptionInterface
+     * @throws \Exception
+     */
+    public function execute(): AssetProxyQueryResultInterface
+    {
+        $page = (int) ceil(($this->offset + 1) / $this->limit);
+
+        if($this->searchTerm === '') {
+            $photos = $this->assetSource->getPexelsClient()->curated($this->limit, $page);
+        } else {
+            $photos = $this->assetSource->getPexelsClient()->search($this->searchTerm, $this->limit, $page);
+        }
+
+        return new PexelsAssetProxyQueryResult($this, $photos, $this->assetSource);
+    }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        throw new \Exception(__METHOD__ . 'is not yet implemented');
+    }
+}

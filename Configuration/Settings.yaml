@@ -1,0 +1,7 @@
+Neos:
+  Media:
+    assetSources:
+      pexels:
+        assetSource: 'DL\AssetSource\Pexels\AssetSource\PexelsAssetSource'
+        assetSourceOptions:
+          accessKey: access-key

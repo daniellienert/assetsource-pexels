@@ -1,0 +1,19 @@
+{
+    "description": "Pexels Asset Source - https://www.pexels.com/",
+    "type": "neos-package",
+    "name": "dl/assetsource-pexels",
+    "require": {
+        "neos/neos": "^4.0",
+        "guzzlehttp/guzzle": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "DL\\AssetSource\\Pexels\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "DL.AssetSource.Pexels"
+        }
+    }
+}

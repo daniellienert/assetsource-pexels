@@ -1,0 +1,2 @@
+DlAssetSourcePexels_PhotoPropertyCache:
+  frontend: Neos\Cache\Frontend\VariableFrontend
