@@ -25,7 +25,7 @@ class PexelsQueryResult
     /**
      * @var int
      */
-    protected $totalResults = 0;
+    protected $totalResults = 30;
 
     /**
      * @param array $photos

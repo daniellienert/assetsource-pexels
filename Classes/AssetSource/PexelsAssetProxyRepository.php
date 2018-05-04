@@ -100,6 +100,6 @@ final class PexelsAssetProxyRepository implements AssetProxyRepositoryInterface
      */
     public function countAll(): int
     {
-        return 30;
+        return 40000;
     }
 }

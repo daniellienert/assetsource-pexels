@@ -209,6 +209,6 @@ final class PexelsAssetProxyQueryResult implements AssetProxyQueryResultInterfac
      */
     public function count()
     {
-        return $this->pexelsQueryResult->getPhotos()->count();
+        return $this->pexelsQueryResult->getTotalResults();
     }
 }

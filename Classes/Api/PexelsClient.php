@@ -136,7 +136,7 @@ final class PexelsClient
      */
     protected function processResult(array $resultArray) {
         $photos = $resultArray['photos'] ?? [];
-        $totalResults = $resultArray['total_results'] ?? 0;
+        $totalResults = $resultArray['total_results'] ?? 30;
 
         foreach ($photos as $photo) {
             if(isset($photo['id'])) {
