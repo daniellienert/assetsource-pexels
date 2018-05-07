@@ -5,7 +5,7 @@
     "license": "MIT",
     "require": {
         "neos/neos": "^4.0",
-        "guzzlehttp/guzzle": "^5.1"
+        "guzzlehttp/guzzle": "^6.3"
     },
     "autoload": {
         "psr-4": {
