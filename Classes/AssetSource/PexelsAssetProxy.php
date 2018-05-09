@@ -204,7 +204,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      */
     public function getIptcProperty(string $propertyName): string
     {
-        return $this->getIptcProperties()[$propertyName];
+        return $this->getIptcProperties()[$propertyName] ?? '';
     }
 
     /**
