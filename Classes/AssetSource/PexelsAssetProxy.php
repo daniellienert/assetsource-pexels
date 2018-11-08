@@ -9,6 +9,8 @@ namespace DL\AssetSource\Pexels\AssetSource;
  * source code.
  */
 
+use Neos\Eel\EelEvaluatorInterface;
+use Neos\Eel\Utility;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Http\Uri;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\AssetProxyInterface;
@@ -40,6 +42,18 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      * @var array
      */
     private $iptcProperties;
+
+    /**
+     * @var array
+     * @Flow\InjectConfiguration(path="defaultContext", package="Neos.Fusion")
+     */
+    protected $defaultContextConfiguration;
+
+    /**
+     * @var EelEvaluatorInterface
+     * @Flow\Inject(lazy=false)
+     */
+    protected $eelEvaluator;
 
     /**
      * UnsplashAssetProxy constructor.
@@ -190,6 +204,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      *
      * @param string $propertyName
      * @return bool
+     * @throws \Neos\Eel\Exception
      */
     public function hasIptcProperty(string $propertyName): bool
     {
@@ -201,6 +216,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      *
      * @param string $propertyName
      * @return string
+     * @throws \Neos\Eel\Exception
      */
     public function getIptcProperty(string $propertyName): string
     {
@@ -211,13 +227,14 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      * Returns all known IPTC metadata properties as key => value (e.g. "Title" => "My Photo")
      *
      * @return array
+     * @throws \Neos\Eel\Exception
      */
     public function getIptcProperties(): array
     {
         if ($this->iptcProperties === null) {
             $this->iptcProperties = [
                 'Title' => $this->getLabel(),
-                'CopyrightNotice' => 'Pexels.com / ' . $this->getProperty('photographer'),
+                'CopyrightNotice' => $this->compileCopyrightNotice(['name' => $this->getProperty('photographer')]),
             ];
         }
 
@@ -244,5 +261,15 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
             return $urls[$size];
         }
         return '';
+    }
+
+    /**
+     * @param array $userProperties
+     * @return string
+     * @throws \Neos\Eel\Exception
+     */
+    protected function compileCopyrightNotice(array $userProperties): string
+    {
+        return Utility::evaluateEelExpression($this->assetSource->getCopyRightNoticeTemplate(), $this->eelEvaluator, ['user' => $userProperties], $this->defaultContextConfiguration);
     }
 }

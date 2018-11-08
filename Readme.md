@@ -11,3 +11,11 @@ This package provides a Neos Asset Source to access the [Pexels](https://www.pex
 3. Configure the API key in the settings
 
 ![Neos Media Browser with Pexels Data Source selected](https://user-images.githubusercontent.com/642226/39648639-261402f6-4fe3-11e8-9788-7c5425eac087.png)
+
+## AssetsourceOptions
+
+**copyRightNoticeTemplate**
+
+Eel expression to compile the copyright notice using available data:
+
+* *user.name* The authors name
