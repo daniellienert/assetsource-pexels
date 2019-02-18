@@ -10,6 +10,7 @@ namespace DL\AssetSource\Pexels\Api;
  */
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Neos\Cache\Frontend\VariableFrontend;
 use Neos\Flow\Annotations as Flow;
 
@@ -52,7 +53,7 @@ final class PexelsClient
     /**
      * @return Client
      */
-    private function getClient()
+    private function getClient(): Client
     {
         if ($this->client === null) {
             $this->client = new Client([
@@ -69,6 +70,8 @@ final class PexelsClient
      * @param int $pageSize
      * @param int $page
      * @return PexelsQueryResult
+     * @throws GuzzleException
+     * @throws \Neos\Cache\Exception
      */
     public function curated(int $pageSize = 20, int $page = 1)
     {
@@ -81,6 +84,8 @@ final class PexelsClient
      * @param int $page
      *
      * @return PexelsQueryResult
+     * @throws GuzzleException
+     * @throws \Neos\Cache\Exception
      */
     public function search(string $query, int $pageSize = 20, int $page = 1)
     {
@@ -92,8 +97,9 @@ final class PexelsClient
      * @return mixed
      * @throws \Exception
      */
-    public function findByIdentifier(string $identifier) {
-        if(!$this->photoPropertyCache->has($identifier)) {
+    public function findByIdentifier(string $identifier)
+    {
+        if (!$this->photoPropertyCache->has($identifier)) {
             throw new \Exception(sprintf('Photo with id %s was not found in the cache', $identifier), 1525457755);
         }
 
@@ -106,6 +112,8 @@ final class PexelsClient
      * @param int $page
      * @param string $query
      * @return PexelsQueryResult
+     * @throws GuzzleException
+     * @throws \Neos\Cache\Exception
      */
     private function executeQuery(string $type, int $pageSize = 20, int $page = 1, string $query = '')
     {
@@ -133,13 +141,15 @@ final class PexelsClient
     /**
      * @param array $resultArray
      * @return PexelsQueryResult
+     * @throws \Neos\Cache\Exception
      */
-    protected function processResult(array $resultArray) {
+    protected function processResult(array $resultArray): PexelsQueryResult
+    {
         $photos = $resultArray['photos'] ?? [];
         $totalResults = $resultArray['total_results'] ?? 30;
 
         foreach ($photos as $photo) {
-            if(isset($photo['id'])) {
+            if (isset($photo['id'])) {
                 $this->photoPropertyCache->set($photo['id'], $photo);
             }
         }

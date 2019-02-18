@@ -9,6 +9,7 @@ namespace DL\AssetSource\Pexels\AssetSource;
  * source code.
  */
 
+use GuzzleHttp\Exception\GuzzleException;
 use Neos\Flow\Annotations as Flow;
 use Neos\Media\Domain\Model\AssetSource\AssetProxyQueryInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxyQueryResultInterface;
@@ -98,6 +99,7 @@ final class PexelsAssetProxyQuery implements AssetProxyQueryInterface
      * @return AssetProxyQueryResultInterface
      * @throws AssetSourceConnectionExceptionInterface
      * @throws \Exception
+     * @throws GuzzleException
      */
     public function execute(): AssetProxyQueryResultInterface
     {
@@ -114,6 +116,7 @@ final class PexelsAssetProxyQuery implements AssetProxyQueryInterface
 
     /**
      * @return int
+     * @throws \Exception
      */
     public function count(): int
     {

@@ -68,6 +68,7 @@ final class PexelsAssetProxyQueryResult implements AssetProxyQueryResultInterfac
      * Returns an array with the asset proxies in the result set
      *
      * @return AssetProxyInterface[]
+     * @throws \Exception
      */
     public function toArray(): array
     {
@@ -192,6 +193,7 @@ final class PexelsAssetProxyQueryResult implements AssetProxyQueryResultInterfac
      * </p>
      * @return void
      * @since 5.0.0
+     * @throws \Exception
      */
     public function offsetUnset($offset)
     {

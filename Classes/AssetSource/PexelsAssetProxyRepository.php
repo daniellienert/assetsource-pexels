@@ -9,6 +9,7 @@ namespace DL\AssetSource\Pexels\AssetSource;
  * source code.
  */
 
+use GuzzleHttp\Exception\GuzzleException;
 use Neos\Media\Domain\Model\AssetSource\AssetNotFoundExceptionInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\AssetProxyInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxyQueryResultInterface;
@@ -56,6 +57,7 @@ final class PexelsAssetProxyRepository implements AssetProxyRepositoryInterface
      * @return AssetProxyQueryResultInterface
      * @throws AssetSourceConnectionExceptionInterface
      * @throws \Exception
+     * @throws GuzzleException
      */
     public function findAll(): AssetProxyQueryResultInterface
     {
@@ -68,6 +70,7 @@ final class PexelsAssetProxyRepository implements AssetProxyRepositoryInterface
      * @return AssetProxyQueryResultInterface
      * @throws AssetSourceConnectionExceptionInterface
      * @throws \Exception
+     * @throws GuzzleException
      */
     public function findBySearchTerm(string $searchTerm): AssetProxyQueryResultInterface
     {
@@ -79,6 +82,7 @@ final class PexelsAssetProxyRepository implements AssetProxyRepositoryInterface
     /**
      * @param Tag $tag
      * @return AssetProxyQueryResultInterface
+     * @throws \Exception
      */
     public function findByTag(Tag $tag): AssetProxyQueryResultInterface
     {
@@ -87,6 +91,7 @@ final class PexelsAssetProxyRepository implements AssetProxyRepositoryInterface
 
     /**
      * @return AssetProxyQueryResultInterface
+     * @throws \Exception
      */
     public function findUntagged(): AssetProxyQueryResultInterface
     {

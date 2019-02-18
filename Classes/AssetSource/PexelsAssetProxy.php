@@ -119,6 +119,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
 
     /**
      * @return \DateTimeInterface
+     * @throws \Exception
      */
     public function getLastModified(): \DateTimeInterface
     {
