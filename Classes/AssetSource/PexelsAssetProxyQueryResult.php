@@ -26,7 +26,6 @@ final class PexelsAssetProxyQueryResult implements AssetProxyQueryResultInterfac
      */
     private $pexelsQueryResult = [];
 
-
     /**
      * @var PexelsAssetProxyQuery
      */

@@ -22,7 +22,7 @@ final class PexelsAssetSource implements AssetSourceInterface
     private $assetSourceIdentifier;
 
     /**
-     * @var NeosAssetProxyRepository
+     * @var PexelsAssetProxyRepository
      */
     private $assetProxyRepository;
 

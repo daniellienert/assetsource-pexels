@@ -17,7 +17,6 @@ use Neos\Media\Domain\Model\AssetSource\AssetProxyRepositoryInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetSourceConnectionExceptionInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetTypeFilter;
 use Neos\Media\Domain\Model\Tag;
-use Crew\Unsplash;
 
 final class PexelsAssetProxyRepository implements AssetProxyRepositoryInterface
 {
