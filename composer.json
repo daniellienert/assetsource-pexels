@@ -4,7 +4,7 @@
     "name": "dl/assetsource-pexels",
     "license": "MIT",
     "require": {
-        "neos/neos": "^4.0",
+        "neos/neos": "^4.0 || ^5.0",
         "guzzlehttp/guzzle": "^6.3"
     },
     "autoload": {
