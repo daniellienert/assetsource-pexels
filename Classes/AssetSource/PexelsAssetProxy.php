@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace DL\AssetSource\Pexels\AssetSource;
 
 /*
@@ -12,7 +14,7 @@ namespace DL\AssetSource\Pexels\AssetSource;
 use Neos\Eel\EelEvaluatorInterface;
 use Neos\Eel\Utility;
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Http\Uri;
+use Neos\Http\Factories\UriFactory;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\AssetProxyInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\HasRemoteOriginalInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\SupportsIptcMetadataInterface;
@@ -48,6 +50,12 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      * @Flow\InjectConfiguration(path="defaultContext", package="Neos.Fusion")
      */
     protected $defaultContextConfiguration;
+
+    /**
+     * @Flow\Inject
+     * @var UriFactory
+     */
+    protected $uriFactory;
 
     /**
      * @var EelEvaluatorInterface
@@ -163,7 +171,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      */
     public function getThumbnailUri(): ?UriInterface
     {
-        return new Uri($this->getImageUrl(PexelsImageSizeInterface::TINY));
+        return $this->uriFactory->createUri($this->getImageUrl(PexelsImageSizeInterface::TINY));
     }
 
     /**
@@ -171,7 +179,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      */
     public function getPreviewUri(): ?UriInterface
     {
-        return new Uri($this->getImageUrl(PexelsImageSizeInterface::LARGE));
+        return $this->uriFactory->createUri($this->getImageUrl(PexelsImageSizeInterface::LARGE));
     }
 
     /**

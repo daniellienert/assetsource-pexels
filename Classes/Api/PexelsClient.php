@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace DL\AssetSource\Pexels\Api;
 
 /*
@@ -37,7 +39,6 @@ final class PexelsClient
     private $queryResults = [];
 
     /**
-     * @Flow\Inject
      * @var VariableFrontend
      */
     protected $photoPropertyCache;
@@ -115,7 +116,7 @@ final class PexelsClient
      * @throws GuzzleException
      * @throws \Neos\Cache\Exception
      */
-    private function executeQuery(string $type, int $pageSize = 20, int $page = 1, string $query = '')
+    private function executeQuery(string $type, int $pageSize = 20, int $page = 1, string $query = ''): PexelsQueryResult
     {
         $requestParameter = [
             'per_page' => $pageSize,
@@ -150,7 +151,7 @@ final class PexelsClient
 
         foreach ($photos as $photo) {
             if (isset($photo['id'])) {
-                $this->photoPropertyCache->set($photo['id'], $photo);
+                $this->photoPropertyCache->set((string)$photo['id'], $photo);
             }
         }
 
