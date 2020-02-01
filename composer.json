@@ -3,8 +3,15 @@
     "type": "neos-package",
     "name": "dl/assetsource-pexels",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Lienert",
+            "homepage": "https://github.com/daniellienert",
+            "role": "Developer"
+        }
+    ],
     "require": {
-        "neos/neos": "^4.0 || ^5.0",
+        "neos/neos": "^4.0",
         "guzzlehttp/guzzle": "^6.3"
     },
     "autoload": {
