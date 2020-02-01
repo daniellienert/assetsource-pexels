@@ -37,6 +37,11 @@ final class PexelsAssetSource implements AssetSourceInterface
     private $copyRightNoticeTemplate;
 
     /**
+     * @var string
+     */
+    private $defaultSearchTerm;
+
+    /**
      * PexelsAssetSource constructor.
      * @param string $assetSourceIdentifier
      * @param array $assetSourceOptions
@@ -46,6 +51,7 @@ final class PexelsAssetSource implements AssetSourceInterface
         $this->assetSourceIdentifier = $assetSourceIdentifier;
         $this->pexelsClient = new PexelsClient($assetSourceOptions['accessKey']);
         $this->copyRightNoticeTemplate = $assetSourceOptions['copyRightNoticeTemplate'] ?? '';
+        $this->defaultSearchTerm = trim($assetSourceOptions['defaultSearchTerm']) ?? '';
     }
 
     /**
@@ -114,5 +120,13 @@ final class PexelsAssetSource implements AssetSourceInterface
     public function isReadOnly(): bool
     {
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultSearchTerm(): string
+    {
+        return $this->defaultSearchTerm;
     }
 }

@@ -103,12 +103,14 @@ final class PexelsAssetProxyQuery implements AssetProxyQueryInterface
      */
     public function execute(): AssetProxyQueryResultInterface
     {
-        $page = (int) ceil(($this->offset + 1) / $this->limit);
+        $page = (int)ceil(($this->offset + 1) / $this->limit);
 
-        if($this->searchTerm === '') {
+        $searchTerm = $this->searchTerm ?: $this->assetSource->getDefaultSearchTerm();
+
+        if ($searchTerm === '') {
             $photos = $this->assetSource->getPexelsClient()->curated($this->limit, $page);
         } else {
-            $photos = $this->assetSource->getPexelsClient()->search($this->searchTerm, $this->limit, $page);
+            $photos = $this->assetSource->getPexelsClient()->search($searchTerm, $this->limit, $page);
         }
 
         return new PexelsAssetProxyQueryResult($this, $photos, $this->assetSource);

@@ -5,4 +5,8 @@ Neos:
         assetSource: 'DL\AssetSource\Pexels\AssetSource\PexelsAssetSource'
         assetSourceOptions:
           accessKey: access-key
+
+          # If set, this search is shown instead of the curated photos when no search term is defined.
+          defaultSearchTerm: ''
+
           copyRightNoticeTemplate: '${"Pexels.com / " + user.name}'

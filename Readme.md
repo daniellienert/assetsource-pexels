@@ -19,3 +19,8 @@ This package provides a Neos Asset Source to access the [Pexels](https://www.pex
 Eel expression to compile the copyright notice using available data:
 
 * *user.name* The authors name
+
+**defaultSearchTerm**
+
+If set, this search is shown instead of the curated photos when no search term is defined.
+
