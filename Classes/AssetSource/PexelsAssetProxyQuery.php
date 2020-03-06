@@ -26,7 +26,7 @@ final class PexelsAssetProxyQuery implements AssetProxyQueryInterface
     /**
      * @var int
      */
-    private $limit = 20;
+    private $limit = 80;
 
     /**
      * @var int
