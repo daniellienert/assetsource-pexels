@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace DL\AssetSource\Pexels\AssetSource;
 
 /*
@@ -71,7 +72,7 @@ final class PexelsAssetProxyQueryResult implements AssetProxyQueryResultInterfac
      */
     public function toArray(): array
     {
-        throw new \Exception(__METHOD__ . 'is not yet implemented');
+        return $this->pexelsQueryResult->getPhotos()->getArrayCopy();
     }
 
     /**
@@ -196,7 +197,7 @@ final class PexelsAssetProxyQueryResult implements AssetProxyQueryResultInterfac
      */
     public function offsetUnset($offset)
     {
-        throw new \Exception(__METHOD__ . 'is not yet implemented');
+        $this->pexelsQueryResult->getPhotoIterator()->offsetUnset($offset);
     }
 
     /**

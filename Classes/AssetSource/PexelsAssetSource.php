@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace DL\AssetSource\Pexels\AssetSource;
 
 /*
@@ -12,7 +13,6 @@ namespace DL\AssetSource\Pexels\AssetSource;
 use DL\AssetSource\Pexels\Api\PexelsClient;
 use Neos\Media\Domain\Model\AssetSource\AssetProxyRepositoryInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetSourceInterface;
-use Neos\Media\Domain\Model\AssetSource\Neos\NeosAssetProxyRepository;
 
 final class PexelsAssetSource implements AssetSourceInterface
 {

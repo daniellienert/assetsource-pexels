@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace DL\AssetSource\Pexels\AssetSource;
 
 /*
@@ -82,19 +83,21 @@ final class PexelsAssetProxyRepository implements AssetProxyRepositoryInterface
      * @param Tag $tag
      * @return AssetProxyQueryResultInterface
      * @throws \Exception
+     * @throws GuzzleException
      */
     public function findByTag(Tag $tag): AssetProxyQueryResultInterface
     {
-        throw new \Exception(__METHOD__ . 'is not yet implemented');
+        return $this->findAll();
     }
 
     /**
      * @return AssetProxyQueryResultInterface
      * @throws \Exception
+     * @throws GuzzleException
      */
     public function findUntagged(): AssetProxyQueryResultInterface
     {
-        throw new \Exception(__METHOD__ . 'is not yet implemented');
+        return $this->findAll();
     }
 
     /**

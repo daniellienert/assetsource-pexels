@@ -24,15 +24,6 @@ final class PexelsAssetProxyQuery implements AssetProxyQueryInterface
     private $assetSource;
 
     /**
-     * UnsplashAssetProxyQuery constructor.
-     * @param PexelsAssetSource $assetSource
-     */
-    public function __construct(PexelsAssetSource $assetSource)
-    {
-        $this->assetSource = $assetSource;
-    }
-
-    /**
      * @var int
      */
     private $limit = 20;
@@ -46,6 +37,15 @@ final class PexelsAssetProxyQuery implements AssetProxyQueryInterface
      * @var string
      */
     private $searchTerm = '';
+
+    /**
+     * UnsplashAssetProxyQuery constructor.
+     * @param PexelsAssetSource $assetSource
+     */
+    public function __construct(PexelsAssetSource $assetSource)
+    {
+        $this->assetSource = $assetSource;
+    }
 
     /**
      * @param int $offset
@@ -119,9 +119,10 @@ final class PexelsAssetProxyQuery implements AssetProxyQueryInterface
     /**
      * @return int
      * @throws \Exception
+     * @throws GuzzleException
      */
     public function count(): int
     {
-        throw new \Exception(__METHOD__ . 'is not yet implemented');
+        return $this->execute()->count();
     }
 }
