@@ -10,12 +10,21 @@ namespace DL\AssetSource\Pexels\AssetSource;
  * source code.
  */
 
+use Neos\Flow\Annotations as Flow;
 use DL\AssetSource\Pexels\Api\PexelsClient;
+use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Media\Domain\Model\AssetSource\AssetProxyRepositoryInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetSourceInterface;
 
+
 final class PexelsAssetSource implements AssetSourceInterface
 {
+    /**
+     * @Flow\Inject
+     * @var ResourceManager
+     */
+    protected $resourceManager;
+
     /**
      * @var string
      */
@@ -42,6 +51,11 @@ final class PexelsAssetSource implements AssetSourceInterface
     private $defaultSearchTerm;
 
     /**
+     * @var string
+     */
+    private $iconPath;
+
+    /**
      * PexelsAssetSource constructor.
      * @param string $assetSourceIdentifier
      * @param array $assetSourceOptions
@@ -52,6 +66,7 @@ final class PexelsAssetSource implements AssetSourceInterface
         $this->pexelsClient = new PexelsClient($assetSourceOptions['accessKey']);
         $this->copyRightNoticeTemplate = $assetSourceOptions['copyRightNoticeTemplate'] ?? '';
         $this->defaultSearchTerm = trim($assetSourceOptions['defaultSearchTerm']) ?? '';
+        $this->iconPath = trim($assetSourceOptions['icon']) ?? '';
     }
 
     /**
@@ -128,5 +143,23 @@ final class PexelsAssetSource implements AssetSourceInterface
     public function getDefaultSearchTerm(): string
     {
         return $this->defaultSearchTerm;
+    }
+
+    /**
+     * Returns the resource path to Assetsources icon
+     *
+     * @return string
+     */
+    public function getIconUri(): string
+    {
+        return $this->resourceManager->getPublicPackageResourceUriByPath($this->iconPath);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return 'Photos provided by www.pexels.com';
     }
 }
