@@ -112,7 +112,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
     /**
      * @return string
      */
-    protected function extractSlugFromUrl()
+    protected function extractSlugFromUrl(): string
     {
         $url = $this->getProperty('url');
 
