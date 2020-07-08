@@ -5,7 +5,7 @@ Neos:
         assetSource: 'DL\AssetSource\Pexels\AssetSource\PexelsAssetSource'
         assetSourceOptions:
           icon: 'resource://DL.AssetSource.Pexels/Public/Pexels.svg'
-          accessKey: access-key
+          accessKey: ''
 
           # If set, this search is shown instead of the curated photos when no search term is defined.
           defaultSearchTerm: ''

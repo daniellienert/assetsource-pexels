@@ -11,6 +11,7 @@ namespace DL\AssetSource\Pexels\Api;
  * source code.
  */
 
+use DL\AssetSource\Pexels\Exception\ConfigurationException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Neos\Cache\Frontend\VariableFrontend;
@@ -53,9 +54,14 @@ final class PexelsClient
 
     /**
      * @return Client
+     * @throws ConfigurationException
      */
     private function getClient(): Client
     {
+        if (trim($this->apiKey) === '') {
+            throw new ConfigurationException('No API key for pexels was defined. Get your API key at https://www.pexels.com/api/ and add it to your settings', 1594199031);
+        }
+
         if ($this->client === null) {
             $this->client = new Client([
                 'headers' => [
