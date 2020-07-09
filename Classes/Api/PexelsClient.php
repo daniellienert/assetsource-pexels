@@ -71,10 +71,11 @@ final class PexelsClient
 
         if ($this->client === null) {
             $this->client = new Client([
+                'proxy' => $this->proxy,
+                'timeout' => 3.0,
                 'headers' => [
                     'Authorization' => $this->apiKey,
-                    'proxy' => $this->proxy,
-                ]
+                ],
             ]);
         }
 
