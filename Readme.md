@@ -10,9 +10,17 @@ This package provides a Neos Asset Source to access the [Pexels](https://www.pex
 2. Request an API key from Pexels https://www.pexels.com/api/new/
 3. Configure the API key in the settings
 
-![Neos Media Browser with Pexels Data Source selected](https://user-images.githubusercontent.com/642226/39648639-261402f6-4fe3-11e8-9788-7c5425eac087.png)
+![Neos Media Browser with Pexels Data Source selected](https://user-images.githubusercontent.com/642226/87046128-0d288c00-c1f9-11ea-9d82-b46a27affff7.png)
 
 ## AssetsourceOptions
+
+**accessKey**
+
+The access key to the Pexels.com API
+
+**proxyUrl**
+
+If a proxy is needed to access pexels.com, configure the proxy here.
 
 **copyRightNoticeTemplate**
 

@@ -45,10 +45,17 @@ final class PexelsClient
     protected $photoPropertyCache;
 
     /**
-     * @param string $apiKey
+     * @var string
      */
-    public function __construct(string $apiKey)
+    protected $proxy;
+
+    /**
+     * @param string $apiKey
+     * @param string $proxy
+     */
+    public function __construct(string $apiKey, string $proxy)
     {
+        $this->proxy = $proxy;
         $this->apiKey = $apiKey;
     }
 
@@ -65,7 +72,8 @@ final class PexelsClient
         if ($this->client === null) {
             $this->client = new Client([
                 'headers' => [
-                    'Authorization' => $this->apiKey
+                    'Authorization' => $this->apiKey,
+                    'proxy' => $this->proxy,
                 ]
             ]);
         }

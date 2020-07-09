@@ -63,7 +63,7 @@ final class PexelsAssetSource implements AssetSourceInterface
     public function __construct(string $assetSourceIdentifier, array $assetSourceOptions)
     {
         $this->assetSourceIdentifier = $assetSourceIdentifier;
-        $this->pexelsClient = new PexelsClient($assetSourceOptions['accessKey']);
+        $this->pexelsClient = new PexelsClient($assetSourceOptions['accessKey'], $assetSourceOptions['proxyUrl'] ?? '');
         $this->copyRightNoticeTemplate = $assetSourceOptions['copyRightNoticeTemplate'] ?? '';
         $this->defaultSearchTerm = trim($assetSourceOptions['defaultSearchTerm']) ?? '';
         $this->iconPath = trim($assetSourceOptions['icon']) ?? '';

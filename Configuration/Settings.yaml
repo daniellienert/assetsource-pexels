@@ -5,7 +5,12 @@ Neos:
         assetSource: 'DL\AssetSource\Pexels\AssetSource\PexelsAssetSource'
         assetSourceOptions:
           icon: 'resource://DL.AssetSource.Pexels/Public/Pexels.svg'
+
+          # The Pexels API access key
           accessKey: ''
+
+          # Proxy to reach pexels.com
+          proxyUrl: ''
 
           # If set, this search is shown instead of the curated photos when no search term is defined.
           defaultSearchTerm: ''
