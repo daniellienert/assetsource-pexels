@@ -187,7 +187,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      */
     public function getImportStream()
     {
-        return fopen($this->getImageUrl(PexelsImageSizeInterface::ORIGINAL), 'r');
+        return $this->assetSource->getPexelsClient()->getFileStream($this->getImageUrl(PexelsImageSizeInterface::ORIGINAL));
     }
 
     /**

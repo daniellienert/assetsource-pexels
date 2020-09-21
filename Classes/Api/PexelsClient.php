@@ -11,18 +11,19 @@ namespace DL\AssetSource\Pexels\Api;
  * source code.
  */
 
+use Neos\Flow\Annotations as Flow;
 use DL\AssetSource\Pexels\Exception\ConfigurationException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Neos\Cache\Frontend\VariableFrontend;
-use Neos\Flow\Annotations as Flow;
+
 
 final class PexelsClient
 {
-    const API_URL = 'https://api.pexels.com/v1/';
+    protected const API_URL = 'https://api.pexels.com/v1/';
 
-    const QUERY_TYPE_CURATED = 'curated';
-    const QUERY_TYPE_SEARCH = 'search';
+    protected const QUERY_TYPE_CURATED = 'curated';
+    protected const QUERY_TYPE_SEARCH = 'search';
 
     /**
      * @var string
@@ -60,36 +61,13 @@ final class PexelsClient
     }
 
     /**
-     * @return Client
-     * @throws ConfigurationException
-     */
-    private function getClient(): Client
-    {
-        if (trim($this->apiKey) === '') {
-            throw new ConfigurationException('No API key for pexels was defined. Get your API key at https://www.pexels.com/api/ and add it to your settings', 1594199031);
-        }
-
-        if ($this->client === null) {
-            $this->client = new Client([
-                'proxy' => $this->proxy,
-                'timeout' => 3.0,
-                'headers' => [
-                    'Authorization' => $this->apiKey,
-                ],
-            ]);
-        }
-
-        return $this->client;
-    }
-
-    /**
      * @param int $pageSize
      * @param int $page
      * @return PexelsQueryResult
      * @throws GuzzleException
      * @throws \Neos\Cache\Exception
      */
-    public function curated(int $pageSize = 20, int $page = 1)
+    public function curated(int $pageSize = 20, int $page = 1): PexelsQueryResult
     {
         return $this->executeQuery(self::QUERY_TYPE_CURATED, $pageSize, $page);
     }
@@ -103,7 +81,7 @@ final class PexelsClient
      * @throws GuzzleException
      * @throws \Neos\Cache\Exception
      */
-    public function search(string $query, int $pageSize = 20, int $page = 1)
+    public function search(string $query, int $pageSize = 20, int $page = 1): PexelsQueryResult
     {
         return $this->executeQuery(self::QUERY_TYPE_SEARCH, $pageSize, $page, $query);
     }
@@ -120,6 +98,21 @@ final class PexelsClient
         }
 
         return $this->photoPropertyCache->get($identifier);
+    }
+
+    /**
+     * @param string $url
+     * @return false|resource
+     */
+    public function getFileStream(string $url)
+    {
+        $context = stream_context_create([
+            'http' => [
+                'proxy' => $this->proxy
+            ],
+        ]);
+
+        return fopen($url, 'r', false, $context);
     }
 
     /**
@@ -171,5 +164,28 @@ final class PexelsClient
         }
 
         return new PexelsQueryResult($photos, $totalResults);
+    }
+
+    /**
+     * @return Client
+     * @throws ConfigurationException
+     */
+    private function getClient(): Client
+    {
+        if (trim($this->apiKey) === '') {
+            throw new ConfigurationException('No API key for pexels was defined. Get your API key at https://www.pexels.com/api/ and add it to your settings', 1594199031);
+        }
+
+        if ($this->client === null) {
+            $this->client = new Client([
+                'proxy' => $this->proxy,
+                'timeout' => 3.0,
+                'headers' => [
+                    'Authorization' => $this->apiKey,
+                ],
+            ]);
+        }
+
+        return $this->client;
     }
 }
