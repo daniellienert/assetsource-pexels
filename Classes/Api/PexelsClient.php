@@ -11,12 +11,12 @@ namespace DL\AssetSource\Pexels\Api;
  * source code.
  */
 
+use DL\AssetSource\Pexels\Exception\TransferException;
 use Neos\Flow\Annotations as Flow;
 use DL\AssetSource\Pexels\Exception\ConfigurationException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Neos\Cache\Frontend\VariableFrontend;
-
 
 final class PexelsClient
 {
@@ -106,13 +106,19 @@ final class PexelsClient
      */
     public function getFileStream(string $url)
     {
+        $tcpPrefixedProxy = str_replace('http', 'tcp', $this->proxy);
+
         $context = stream_context_create([
             'http' => [
-                'proxy' => $this->proxy
+                'proxy' => $tcpPrefixedProxy
             ],
         ]);
 
-        return fopen($url, 'r', false, $context);
+        $resource = fopen($url, 'r', false, $context);
+
+        if (!is_resource($resource)) {
+            throw new TransferException(sprintf('Unable to load an image from %s %s. Error: %s', $url, $tcpPrefixedProxy !== '' ? 'using proxy ' . $tcpPrefixedProxy : ' without using a proxy.', error_get_last()), 1600770625);
+        }
     }
 
     /**
