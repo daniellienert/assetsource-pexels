@@ -119,6 +119,8 @@ final class PexelsClient
         if (!is_resource($resource)) {
             throw new TransferException(sprintf('Unable to load an image from %s %s. Error: %s', $url, $tcpPrefixedProxy !== '' ? 'using proxy ' . $tcpPrefixedProxy : ' without using a proxy.', error_get_last()), 1600770625);
         }
+        
+        return $resource;
     }
 
     /**
