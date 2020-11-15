@@ -11,19 +11,24 @@ namespace DL\AssetSource\Pexels\AssetSource;
  * source code.
  */
 
+use DateTime;
+use DateTimeInterface;
+use DL\AssetSource\Pexels\Exception\TransferException;
 use Neos\Eel\EelEvaluatorInterface;
+use Neos\Eel\Exception;
 use Neos\Eel\Utility;
 use Neos\Flow\Annotations as Flow;
 use Neos\Http\Factories\UriFactory;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\AssetProxyInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\HasRemoteOriginalInterface;
+use Neos\Media\Domain\Model\AssetSource\AssetProxy\ProvidesOriginalUriInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\SupportsIptcMetadataInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetSourceInterface;
 use Neos\Media\Domain\Model\ImportedAsset;
 use Neos\Media\Domain\Repository\ImportedAssetRepository;
 use Psr\Http\Message\UriInterface;
 
-final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalInterface, SupportsIptcMetadataInterface
+final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalInterface, SupportsIptcMetadataInterface, ProvidesOriginalUriInterface
 {
     /**
      * @var array
@@ -126,25 +131,19 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return DateTimeInterface
      * @throws \Exception
      */
-    public function getLastModified(): \DateTimeInterface
+    public function getLastModified(): DateTimeInterface
     {
-        return new \DateTime();
+        return new DateTime();
     }
 
-    /**
-     * @return int
-     */
     public function getFileSize(): int
     {
         return 0;
     }
 
-    /**
-     * @return string
-     */
     public function getMediaType(): string
     {
         return 'image/jpeg';
@@ -158,32 +157,29 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
         return (int)$this->getProperty('width');
     }
 
-    /**
-     * @return int|null
-     */
     public function getHeightInPixels(): ?int
     {
         return (int)$this->getProperty('height');
     }
 
-    /**
-     * @return null|UriInterface
-     */
     public function getThumbnailUri(): ?UriInterface
     {
         return $this->uriFactory->createUri($this->getImageUrl(PexelsImageSizeInterface::TINY));
     }
 
-    /**
-     * @return null|UriInterface
-     */
     public function getPreviewUri(): ?UriInterface
     {
         return $this->uriFactory->createUri($this->getImageUrl(PexelsImageSizeInterface::LARGE));
     }
 
+    public function getOriginalUri(): ?UriInterface
+    {
+        return $this->uriFactory->createUri($this->getImageUrl(PexelsImageSizeInterface::ORIGINAL));
+    }
+
     /**
      * @return resource
+     * @throws TransferException
      */
     public function getImportStream()
     {
@@ -213,7 +209,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      *
      * @param string $propertyName
      * @return bool
-     * @throws \Neos\Eel\Exception
+     * @throws Exception
      */
     public function hasIptcProperty(string $propertyName): bool
     {
@@ -225,7 +221,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      *
      * @param string $propertyName
      * @return string
-     * @throws \Neos\Eel\Exception
+     * @throws Exception
      */
     public function getIptcProperty(string $propertyName): string
     {
@@ -236,7 +232,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
      * Returns all known IPTC metadata properties as key => value (e.g. "Title" => "My Photo")
      *
      * @return array
-     * @throws \Neos\Eel\Exception
+     * @throws Exception
      */
     public function getIptcProperties(): array
     {
@@ -275,7 +271,7 @@ final class PexelsAssetProxy implements AssetProxyInterface, HasRemoteOriginalIn
     /**
      * @param array $userProperties
      * @return string
-     * @throws \Neos\Eel\Exception
+     * @throws Exception
      */
     protected function compileCopyrightNotice(array $userProperties): string
     {
