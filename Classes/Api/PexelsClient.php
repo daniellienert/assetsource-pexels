@@ -148,7 +148,7 @@ final class PexelsClient
         if (!isset($this->queryResults[$requestIdentifier])) {
             $result = $this->getClient()->request('GET', self::API_URL . $type . '?' . http_build_query($requestParameter));
 
-            $resultArray = \GuzzleHttp\json_decode($result->getBody(), true);
+            $resultArray = \GuzzleHttp\json_decode($result->getBody()->getContents(), true);
             $this->queryResults[$requestIdentifier] = $this->processResult($resultArray);
         }
 
